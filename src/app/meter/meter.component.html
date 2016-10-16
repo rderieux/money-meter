@@ -1,13 +1,31 @@
 <div>
-<label>{{meterValue}}</label>
+  <label>{{ meterValue }}</label>
 </div>
 <div>
-<button (click)="onStartClick()">Start</button>
-<button (click)="onStopClick()">Stop</button>
+  <button (click)="onStartClick()">Start</button>
 </div>
 <div>
-<button (click)="onAddAttendeeClick(newAttendeeSalary.value, newAttendeeCount.value)">
-  Add Attendee</button>
-  <input #newAttendeeSalary />
-  <input #newAttendeeCount />
+  <button (click)="onStopClick()">Stop</button>
 </div>
+
+<div>
+  <button (click)="onAddAttendeeClick(
+  newAttendeeRole.value,
+  newAttendeeSalary.value,
+  newAttendeeCount.value)">
+    Add Attendee
+  </button>
+  <label>Role: </label><input #newAttendeeRole/>
+  <label>Salary: </label><input #newAttendeeSalary/>
+  <label>Count: </label><input #newAttendeeCount/>
+</div>
+
+<!--TODO set up Attendee List-->
+<!--<app-attendee-list></app-attendee-list>-->
+<!--<div>-->
+  <!--<li *ngFor="let attendee of attendees">-->
+    <!--<span>-->
+      <!--<b>{{ attendee.role }} - {{ attendee.salary }}</b>-->
+    <!--</span>-->
+  <!--</li>-->
+<!--</div>-->

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import Attendee from '../shared/attendee';
+import AttendeeService from '../shared/attendee.service';
 
 @Component({
   selector: 'app-meter',
@@ -8,19 +10,20 @@ import { Component, OnInit } from '@angular/core';
 export class MeterComponent implements OnInit {
 
   meterValue = 0;
-  meterRate = 157;
+  meterRate = 0;
   refreshInterval = 1000;
   intervalID;
-  attendeeList = [];
+  attendees: Attendee[];
 
   // TODO Add time travel
   // meterStart = new Date();
   // meterEnd = null;
 
-  constructor() { }
+  constructor(public attendeeService: AttendeeService) { }
 
   ngOnInit() {
-
+    this.attendees = this.attendeeService.getAttendees();
+    this.calcMeterRate();
   }
 
   ngOnDestroy() {
@@ -45,15 +48,16 @@ export class MeterComponent implements OnInit {
 
   calcMeterRate() {
     var newMeterRate = 0;
-    for (var i = 0; i < this.attendeeList.length; i++) {
-      newMeterRate += this.attendeeList[i][0] * this.attendeeList[i][1];
-    }
+    for (var i = 0; i < this.attendees.length; i++) {
+      newMeterRate += Number(this.attendees[i].salary);
+    };
     this.meterRate = newMeterRate;
   }
 
-  onAddAttendeeClick(salary, count) {
-    this.attendeeList.push([salary, count])
+  onAddAttendeeClick(role, salary, count) {
+    for(var i = 0; i < count; i++) {
+      this.attendees.push(new Attendee(1, role, salary));
+    };
     this.calcMeterRate();
   }
-
 }
