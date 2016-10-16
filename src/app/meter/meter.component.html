@@ -1,0 +1,13 @@
+<div>
+<label>{{meterValue}}</label>
+</div>
+<div>
+<button (click)="onStartClick()">Start</button>
+<button (click)="onStopClick()">Stop</button>
+</div>
+<div>
+<button (click)="onAddAttendeeClick(newAttendeeSalary.value, newAttendeeCount.value)">
+  Add Attendee</button>
+  <input #newAttendeeSalary />
+  <input #newAttendeeCount />
+</div>
