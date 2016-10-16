@@ -1,0 +1,10 @@
+  <li *ngFor="let attendee of attendees">
+      <span (click)="onAttendeeSelected(attendee)">
+        <b>{{ attendee.role }} - {{ attendee.salary }}</b>
+      </span>
+  </li>
+
+<div *ngIf="selectedAttendee">
+  <app-attendee-detail [attendee]="selectedAttendee"></app-attendee-detail>
+  <!--<button (click)="onCloseClicked()">Close</button>-->
+</div>
