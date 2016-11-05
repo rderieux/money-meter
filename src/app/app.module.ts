@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-
+import { RouterModule } from '@angular/router'
 
 import { AppComponent } from './app.component';
 import { MeterComponent } from './meter/meter.component';
@@ -25,7 +25,26 @@ import { AttendeeDetailComponent } from './attendee-detail/attendee-detail.compo
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    RouterModule.forRoot([
+      {
+        path: 'settings',
+        component: SettingsComponent
+      },
+      {
+        path: 'meter',
+        component: MeterComponent
+      },
+      {
+        path: 'attendees',
+        component: AttendeeListComponent
+      },
+      {
+        path: '',
+        redirectTo: 'meter',
+        pathMatch: 'full'
+      }
+    ])
   ],
   providers: [
     MenuService,

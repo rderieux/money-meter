@@ -1,7 +1,7 @@
 <div class="grid grid-pad">
-  <div *ngFor="let menu of menuOptions" (click)="onMenuSelected(menu)" class="col-1-4">
+  <div *ngFor="let menu of menuOptions" (click)="onMenuSelected()" class="col-1-4">
     <div class="module">
-      <h4>{{ menu.name }}</h4>
+      <h4><a class="module" [href]="menu.menuUrl">{{ menu.name }}</a></h4>
     </div>
   </div>
 </div>
