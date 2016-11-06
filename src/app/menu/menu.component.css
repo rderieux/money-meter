@@ -23,17 +23,18 @@ h3 {
   width: 25%;
 }
 .module {
-  padding: 20px;
+  padding: 50px;
   text-align: center;
   color: #eee;
   max-height: 120px;
-  min-width: 120px;
+  min-width: 100px;
   background-color: #607D8B;
   border-radius: 2px;
   text-decoration: none;
 }
-h4 {
+a {
   position: relative;
+  display: block;
 }
 .module:hover {
   background-color: #EEE;
