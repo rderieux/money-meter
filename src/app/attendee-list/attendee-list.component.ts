@@ -13,7 +13,6 @@ export class AttendeeListComponent implements OnInit {
   selectedAttendee: Attendee;
 
   constructor(public attendeeService: AttendeeService) {
-
   }
 
   ngOnInit() {
@@ -23,5 +22,21 @@ export class AttendeeListComponent implements OnInit {
   onAttendeeSelected(attendee: Attendee) {
     this.selectedAttendee = attendee;
   }
+
+  onCloseClicked() {
+    this.selectedAttendee = null;
+  }
+
+  // onAttendeeChanged(event) {
+  //   debugger;
+  //   this.selectedAttendee = event;
+    // for(let i = 0; i < this.attendees.length; i++) {
+    //   let attendee = this.attendees[i];
+    //   if(attendee.id === event.id){
+    //     attendee = event;
+    //     break;
+    //   }
+    // }
+  // }
 
 }

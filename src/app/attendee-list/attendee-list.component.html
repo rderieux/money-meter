@@ -5,6 +5,9 @@
   </li>
 
 <div *ngIf="selectedAttendee">
-  <app-attendee-detail [attendee]="selectedAttendee"></app-attendee-detail>
-  <!--<button (click)="onCloseClicked()">Close</button>-->
+  <app-attendee-detail
+    (attendeeChanged)="onAttendeeChanged($event)"
+    [attendee]="selectedAttendee">
+  </app-attendee-detail>
+  <button (click)="onCloseClicked()">Close</button>
 </div>

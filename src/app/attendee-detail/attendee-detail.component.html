@@ -1,5 +1,23 @@
-<!--<div *ngIf="(attendee)">-->
-<h1>{{ attendee.id }}</h1>
-<p>{{ attendee.role }}</p>
-<p>{{ attendee.salary }}</p>s
-<!--</div>-->
+<div *ngIf="attendee">
+  <p>Modify Attendee:</p>
+  <form [formGroup]="attendeeForm"
+        (submit)="onSubmit(attendeeForm.value)">
+    <div>
+      <label for="roleInput">Role</label>
+      <input type="text"
+             id="roleInput"
+             placeholder="Role"
+             [formControl]="attendeeForm.controls['attendeeRole']"
+             [(ngModel)]="attendee.role">
+      <br>
+      <label for="salaryInput">Salary</label>
+      <input type="text"
+             id="salaryInput"
+             placeholder="Salary"
+             [formControl]="attendeeForm.controls['attendeeSalary']"
+             [(ngModel)]="attendee.salary">
+      <br>
+      <!--<button type="submit">Submit</button>-->
+    </div>
+  </form>
+</div>
