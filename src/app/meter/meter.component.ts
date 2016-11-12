@@ -31,15 +31,20 @@ export class MeterComponent implements OnInit {
   intervalID;
   attendees: Attendee[];
 
+
   // TODO Add time travel
   // meterStart = new Date();
   // meterEnd = null;
 
   constructor(public attendeeService: AttendeeService) { }
-
+//TODO change the this. stuff to the mongodb
   ngOnInit() {
-    this.attendees = this.attendeeService.getAttendees();
-    this.calcMeterRate();
+    this.attendeeService.getAttendees()
+      .then((attendees) => {
+        this.attendees = attendees;
+        this.calcMeterRate();
+
+      });
   }
 
   ngOnDestroy() {

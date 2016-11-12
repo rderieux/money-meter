@@ -11,9 +11,5 @@ export default class AttendeeService {
     return this.http.get('http://localhost:4000/attendees')
       .toPromise()
       .then(response => response.json()as Attendee[]);
-    // return Promise.resolve([
-    //   new Attendee(11, 'Software Developer', 80000),
-    //   new Attendee(12, 'Software Tester', 50000)
-    // ]);
   }
 }
