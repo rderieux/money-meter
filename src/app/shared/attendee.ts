@@ -1,10 +1,9 @@
 export default class Attendee {
-  id: number;
+  id: string;
   role: string;
   salary: number;
 
-  constructor(id: number, role: string, salary: number) {
-    this.id = id;
+  constructor(role: string, salary: number) {
     this.role = role;
     this.salary = salary;
   }

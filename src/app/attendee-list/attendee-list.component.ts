@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import Attendee from '../shared/attendee';
 import AttendeeService from '../shared/attendee.service';
 
+
+
 @Component({
   selector: 'app-attendee-list',
   templateUrl: './attendee-list.component.html',
@@ -16,7 +18,10 @@ export class AttendeeListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.attendees = this.attendeeService.getAttendees();
+    this.attendeeService.getAttendees()
+      .then((attendees) => {
+        this.attendees = attendees;
+      });
   }
 
   onAttendeeSelected(attendee: Attendee) {
