@@ -8,26 +8,12 @@ import AttendeeService from '../shared/attendee.service';
   selector: 'app-meter',
   templateUrl: './meter.component.html',
   styleUrls: ['./meter.component.css'],
-  // animations: [
-  // trigger('counter', [
-  //   state('inactive', style({
-  //     backgroundColor: '#eee',
-  //     transform: 'scale(1)'
-  //   })),
-  //   state('active', style({
-  //     backgroundColor: '#cfd8dc',
-  //     transform: 'scale(1.1)'
-  //   })),
-  //   transition('inactive => active', animate('100ms ease-in')),
-  //   transition('active => inactive', animate('100ms ease-out'))
-  // ])
-  // ]
 })
 export class MeterComponent implements OnInit {
 
   meterValue = 0;
   meterRate = 0;
-  refreshInterval = 1000;
+  refreshInterval = 100;
   intervalID;
   attendees: Attendee[];
 
@@ -39,12 +25,9 @@ export class MeterComponent implements OnInit {
   constructor(public attendeeService: AttendeeService) { }
 //TODO change the this. stuff to the mongodb
   ngOnInit() {
-    this.attendeeService.getAttendees()
-      .then((attendees) => {
-        this.attendees = attendees;
-        this.calcMeterRate();
-
-      });
+    this.attendeeService.rateChanged.subscribe(() => {
+      this.meterRate = this.attendeeService.intervalRate;
+    });
   }
 
   ngOnDestroy() {
@@ -57,6 +40,7 @@ export class MeterComponent implements OnInit {
     this.meterValue += this.meterRate;
   }
 
+  //TODO move calculate to attendee changed event
   onStartClick() {
     this.intervalID = setInterval(() => {
       this.meterInit();
@@ -66,20 +50,4 @@ export class MeterComponent implements OnInit {
   onStopClick() {
     clearInterval(this.intervalID);
   }
-
-  calcMeterRate() {
-    var newMeterRate = 0;
-    for (var i = 0; i < this.attendees.length; i++) {
-      newMeterRate += Number(this.attendees[i].salary);
-    };
-    this.meterRate = newMeterRate / 2080 / 60 / 60;
-  }
-
-  // onAddAttendeeClick(role, salary, count) {
-  //   for(var i = 0; i < count; i++) {
-  //     this.attendees.push(new Attendee(1, role, salary));
-  //   };
-  //   this.calcMeterRate();
-  // }
-
 }

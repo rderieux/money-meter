@@ -1,9 +1,10 @@
-  <li *ngFor="let attendee of attendees">
+<div>
+  <li *ngFor="let attendee of attendees | async">
       <span (click)="onAttendeeSelected(attendee)">
         <b>{{ attendee.role }} - {{ attendee.salary|currency:'USD':true }}</b>
       </span>
   </li>
-
+</div>
 <div *ngIf="selectedAttendee">
   <app-attendee-detail
     (attendeeChanged)="onAttendeeChanged($event)"

@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {Component, OnInit, OnDestroy, Output, EventEmitter} from '@angular/core';
 import Attendee from '../shared/attendee';
 import AttendeeService from '../shared/attendee.service';
+import {Observable} from "rxjs";
 
 
 
@@ -11,17 +12,15 @@ import AttendeeService from '../shared/attendee.service';
 })
 export class AttendeeListComponent implements OnInit {
 
-  attendees: Attendee[];
+  attendees: Observable<Attendee[]>;
   selectedAttendee: Attendee;
 
   constructor(public attendeeService: AttendeeService) {
   }
 
   ngOnInit() {
-    this.attendeeService.getAttendees()
-      .then((attendees) => {
-        this.attendees = attendees;
-      });
+    this.attendees = this.attendeeService.attendees;
+    this.attendeeService.getAttendees();
   }
 
   onAttendeeSelected(attendee: Attendee) {
@@ -31,17 +30,4 @@ export class AttendeeListComponent implements OnInit {
   onCloseClicked() {
     this.selectedAttendee = null;
   }
-
-  // onAttendeeChanged(event) {
-  //   debugger;
-  //   this.selectedAttendee = event;
-    // for(let i = 0; i < this.attendees.length; i++) {
-    //   let attendee = this.attendees[i];
-    //   if(attendee.id === event.id){
-    //     attendee = event;
-    //     break;
-    //   }
-    // }
-  // }
-
 }
