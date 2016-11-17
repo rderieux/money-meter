@@ -1,34 +1,24 @@
-<<<<<<< HEAD
-import { Injectable } from '@angular/core';
+import {Injectable, EventEmitter} from '@angular/core';
 import Attendee from './attendee';
 
 import 'rxjs/add/operator/toPromise';
 
-=======
-import {Injectable, EventEmitter} from '@angular/core';
->>>>>>> master
 import { Http } from '@angular/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 
-<<<<<<< HEAD
 const ATTENDEE_URI = 'http://localhost:4000/attendees';
-
-@Injectable()
-=======
-import Attendee from './attendee';
->>>>>>> master
 
 @Injectable()
 export default class AttendeeService {
 
-<<<<<<< HEAD
-  constructor(public http: Http) {}
-
-  getAttendees(): Promise<Attendee[]> {
-    return this.http.get(ATTENDEE_URI)
-      .toPromise()
-      .then(response => response.json()as Attendee[]);
-=======
+// <<<<<<< HEAD
+//   constructor(public http: Http) {}
+//
+//   getAttendees(): Promise<Attendee[]> {
+//     return this.http.get(ATTENDEE_URI)
+//       .toPromise()
+//       .then(response => response.json()as Attendee[]);
+// =======
   private _attendees: BehaviorSubject<Attendee[]>;
   private dataStore: {
     attendees: Attendee[]
@@ -55,13 +45,12 @@ export default class AttendeeService {
   }
 
   getAttendees() {
-    return this.http.get('http://localhost:4000/attendees').map(res => res.json())
+    return this.http.get(ATTENDEE_URI).map(res => res.json())
       .subscribe(data => {
         this.dataStore.attendees = data;
         this._attendees.next(Object.assign({}, this.dataStore).attendees);
         this.rateChanged.emit();
       }, error => console.log('Could not load attendees'));
->>>>>>> master
   }
 
   getAttendee(id): Promise<Attendee> {

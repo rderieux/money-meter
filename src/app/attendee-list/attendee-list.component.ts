@@ -1,13 +1,8 @@
-<<<<<<< HEAD
-import {Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router, Params} from '@angular/router';
-
-=======
-import {Component, OnInit, OnDestroy, Output, EventEmitter} from '@angular/core';
->>>>>>> master
+import {Component, OnInit} from '@angular/core';
 import Attendee from '../shared/attendee';
 import AttendeeService from '../shared/attendee.service';
 import {Observable} from "rxjs";
+import {Router} from "@angular/router";
 
 
 
@@ -21,20 +16,12 @@ export class AttendeeListComponent implements OnInit {
   attendees: Observable<Attendee[]>;
   selectedAttendee: Attendee;
 
-  constructor(public attendeeService: AttendeeService, public route: ActivatedRoute, public router: Router, public restaurantService: AttendeeService) { }
+  constructor(public attendeeService: AttendeeService, public router: Router) { }
 
   ngOnInit() {
-<<<<<<< HEAD
-    this.attendeeService.getAttendees()
-      .then((attendees) => {
-        this.attendees = attendees;
-      });
-  };
-=======
     this.attendees = this.attendeeService.attendees;
     this.attendeeService.getAttendees();
   }
->>>>>>> master
 
   onAttendeeSelected(attendee: Attendee) {
     this.selectedAttendee = attendee;
