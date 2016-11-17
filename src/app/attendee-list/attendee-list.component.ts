@@ -4,7 +4,6 @@ import AttendeeService from '../shared/attendee.service';
 import {Observable} from "rxjs";
 import {Router} from "@angular/router";
 
-
 @Component({
   selector: 'app-attendee-list',
   templateUrl: './attendee-list.component.html',
@@ -27,12 +26,7 @@ export class AttendeeListComponent implements OnInit {
   }
 
   onAttendeeDelete(attendee: Attendee) {
-    const { _id } = attendee;
-
-    this.attendeeService.remove(_id)
-      .then(result => {
-        this.router.navigate([ '/meter' ])
-      });
+    this.attendeeService.remove(attendee._id);
   }
 
   onAttendeeAdd() {
