@@ -8,7 +8,9 @@ import Attendee from './attendee';
 export default class AttendeeService {
 
   private _attendees: BehaviorSubject<Attendee[]>;
-  private dataStore: {
+
+  //made public to allow for unit testing
+  public dataStore: {
     attendees: Attendee[]
   };
 
