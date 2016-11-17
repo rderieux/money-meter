@@ -1,13 +1,19 @@
+<form (submit)="onSaved()">
   <li *ngFor="let attendee of attendees">
       <span (click)="onAttendeeSelected(attendee)">
         <b>{{ attendee.role }} - {{ attendee.salary|currency:'USD':true }}</b>
+        <button type="button" (click)="onAttendeeDelete(attendee)">Delete</button>
       </span>
   </li>
-
-<div *ngIf="selectedAttendee">
-  <app-attendee-detail
-    (attendeeChanged)="onAttendeeChanged($event)"
-    [attendee]="selectedAttendee">
-  </app-attendee-detail>
-  <button (click)="onCloseClicked()">Close</button>
+<div>
+  <button type="button" (click)="onAttendeeAdd()">Add</button>
 </div>
+  <div *ngIf="selectedAttendee">
+    <app-attendee-detail
+      (attendeeChanged)="onAttendeeChanged($event)"
+      [attendee]="selectedAttendee">
+    </app-attendee-detail>
+    <button (click)="onSaveClicked()">Save</button>
+    <button (click)="onCloseClicked()">Close</button>
+  </div>
+</form>

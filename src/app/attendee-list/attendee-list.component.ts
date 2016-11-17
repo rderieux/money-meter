@@ -1,4 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {Component, OnInit } from '@angular/core';
+import {ActivatedRoute, Router, Params} from '@angular/router';
+
 import Attendee from '../shared/attendee';
 import AttendeeService from '../shared/attendee.service';
 
@@ -14,18 +16,34 @@ export class AttendeeListComponent implements OnInit {
   attendees: Attendee[];
   selectedAttendee: Attendee;
 
-  constructor(public attendeeService: AttendeeService) {
-  }
+  constructor(public attendeeService: AttendeeService, public route: ActivatedRoute, public router: Router, public restaurantService: AttendeeService) { }
 
   ngOnInit() {
     this.attendeeService.getAttendees()
       .then((attendees) => {
         this.attendees = attendees;
       });
-  }
+  };
 
   onAttendeeSelected(attendee: Attendee) {
     this.selectedAttendee = attendee;
+  }
+
+  onAttendeeDelete(attendee: Attendee) {
+    const { _id } = attendee;
+
+    this.attendeeService.remove(_id)
+      .then(result => {
+        this.router.navigate([ '/attendees' ])
+      });
+  }
+
+  onAttendeeAdd() {
+    this.selectedAttendee = new Attendee('', 0);
+  }
+
+  onSaveClicked() {
+      this.attendeeService.save(this.selectedAttendee);
   }
 
   onCloseClicked() {

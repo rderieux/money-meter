@@ -12,8 +12,8 @@ export class AttendeeDetailComponent implements OnInit {
   @Input()
   attendee: Attendee;
 
-  // @Output()
-  // attendeeChanged = new EventEmitter<Attendee>();
+  @Output()
+  attendeeChanged = new EventEmitter<Attendee>();
 
   fb: FormBuilder;
   attendeeForm: FormGroup;
@@ -34,6 +34,8 @@ export class AttendeeDetailComponent implements OnInit {
       }
     );
   }
+
+
 
   // onSubmit(attendee: Attendee) {
   //   attendee.id = this.attendee.id;

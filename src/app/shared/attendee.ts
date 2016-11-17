@@ -1,5 +1,5 @@
 export default class Attendee {
-  id: string;
+  _id: string;
   role: string;
   salary: number;
 
