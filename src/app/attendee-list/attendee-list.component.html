@@ -1,9 +1,9 @@
-<form (submit)="onSaved()">
+<form (submit)="onSaved()" >
 <div>
   <li *ngFor="let attendee of attendees | async">
       <span (click)="onAttendeeSelected(attendee)">
         <b>{{ attendee.role }} - {{ attendee.salary|currency:'USD':true }}</b>
-        <button type="button" (click)="onAttendeeDelete(attendee)">Delete</button>
+        <img src="../../assets/images/red-x.png" alt="Red X" (click)="onAttendeeDelete(attendee)" >
       </span>
   </li>
   <button type="button" (click)="onAttendeeAdd()">Add</button>
