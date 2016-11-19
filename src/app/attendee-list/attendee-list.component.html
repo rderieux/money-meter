@@ -1,6 +1,6 @@
 <form (submit)="onSaved()">
-<div>
-  <li *ngFor="let attendee of attendees | async">
+<div *ngIf="attendees">
+  <li *ngFor="let attendee of this.attendees | async">
       <span (click)="onAttendeeSelected(attendee)">
         <b>{{ attendee.role }} - {{ attendee.salary|currency:'USD':true }}</b>
         <button type="button" (click)="onAttendeeDelete(attendee)">Delete</button>

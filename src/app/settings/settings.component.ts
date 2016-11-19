@@ -11,20 +11,21 @@ import AttendeeService from '../shared/attendee.service';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
-  attendees: Attendee[];
-  selectedAttendee: Attendee;
+  // attendees: Attendee[];
+  // selectedAttendee: Attendee;
 
   constructor(
-    public router: Router,
-    public attendeeService: AttendeeService) {}
+    // public router: Router,
+    // public attendeeService: AttendeeService
+  ) {}
 
   getAttendees(): void {
-    this.attendeeService.getAttendees();
+    // this.attendeeService.getAttendees();
       // .then(attendees => this.attendees = attendees);
   }
 
   ngOnInit(): void {
-    this.getAttendees();
+    // this.getAttendees();
   }
 
 
