@@ -1,6 +1,6 @@
-<form (submit)="onSaved()" >
-<div>
-  <li *ngFor="let attendee of attendees | async">
+<form (submit)="onSaved()">
+<div *ngIf="attendees">
+  <li *ngFor="let attendee of this.attendees | async">
       <span (click)="onAttendeeSelected(attendee)">
         <b>{{ attendee.role }} - {{ attendee.salary|currency:'USD':true }}</b>
         <img src="../../assets/images/red-x.png" alt="Red X" (click)="onAttendeeDelete(attendee)" >

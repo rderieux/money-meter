@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import Attendee from '../shared/attendee';
 import AttendeeService from '../shared/attendee.service';
 import {Observable} from "rxjs";
-import {Router} from "@angular/router";
+import { List } from 'immutable';
 
 @Component({
   selector: 'app-attendee-list',
@@ -11,22 +11,22 @@ import {Router} from "@angular/router";
 })
 export class AttendeeListComponent implements OnInit {
 
-  attendees: Observable<Attendee[]>;
+  attendees: Observable<List<Attendee>>;
   selectedAttendee: Attendee;
 
-  constructor(public attendeeService: AttendeeService, public router: Router) { }
+  constructor(private attendeeService: AttendeeService) { }
 
   ngOnInit() {
     this.attendees = this.attendeeService.attendees;
-    this.attendeeService.getAttendees();
   }
 
+  //TODO handle a selected attendee being modified without save/close
   onAttendeeSelected(attendee: Attendee) {
     this.selectedAttendee = attendee;
   }
 
   onAttendeeDelete(attendee: Attendee) {
-    this.attendeeService.remove(attendee._id);
+    this.attendeeService.deleteAttendee(attendee);
   }
 
   onAttendeeAdd() {
@@ -34,9 +34,11 @@ export class AttendeeListComponent implements OnInit {
   }
 
   onSaveClicked() {
-      this.attendeeService.save(this.selectedAttendee);
+    this.attendeeService.saveAttendee(this.selectedAttendee);
+    this.selectedAttendee = null;
   }
 
+  //TODO handle a two way binding change without save click
   onCloseClicked() {
     this.selectedAttendee = null;
   }
