@@ -1,13 +1,15 @@
 import {Injectable, EventEmitter} from '@angular/core';
 import Attendee from './attendee';
 import { List } from 'immutable';
+import { UUID } from 'angular2-uuid';
 
 import 'rxjs/add/operator/toPromise';
 
-import { Http } from '@angular/http';
+// import { Http } from '@angular/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 
-const ATTENDEE_URI = 'http://localhost:4000/attendees';
+// const ATTENDEE_URI = 'http://localhost:4000/attendees';
+const ATTENDEE_KEY = 'attendees';
 
 @Injectable()
 export default class AttendeeService {
@@ -17,6 +19,20 @@ export default class AttendeeService {
   private _attendees: BehaviorSubject<List<Attendee>>
     = new BehaviorSubject(List([]));
 
+  private saveToLocalStorage(attendees) {
+    localStorage.setItem(ATTENDEE_KEY, JSON.stringify(attendees));
+  };
+
+  private loadFromLocalStorage() {
+    const attendees = localStorage.getItem(ATTENDEE_KEY);
+
+    if(!attendees) {
+      return [];
+    } else {
+      return JSON.parse(attendees)
+    }
+  };
+
   //made public to allow for unit testing
   // public dataStore: {
   //   attendees: Observable<Attendee[]>;
@@ -24,14 +40,16 @@ export default class AttendeeService {
 
   rateChanged = new EventEmitter();
 
-  constructor(private http: Http) {
+  constructor() {
     // this.dataStore = { attendees: [] };
     // this._attendees = <BehaviorSubject<Attendee[]>>new BehaviorSubject([]);
     this.loadInitialData();
   }
 
-  get attendees() {
-    return this._attendees.asObservable();
+  get attendees(): any[] {
+
+    return this.loadFromLocalStorage();
+    // return this._attendees.asObservable();
   }
 
   get meterRate() {
@@ -45,11 +63,11 @@ export default class AttendeeService {
   }
 
   loadInitialData() {
-    this.http.get(ATTENDEE_URI)
+    this.loadFromLocalStorage().get(ATTENDEE_KEY)
       .subscribe(res => {
-        let attendees = (<Object[]>res.json()).map((attendee: any) => {
-          var newAttendee = new Attendee(attendee.role, attendee.salary);
-          newAttendee._id = attendee._id;
+        let attendees = (<Object[]>res.json()).map((attendee:any = {}) => {
+          let newAttendee = new Attendee(attendee.role, attendee.salary);
+          newAttendee.id = attendee._id;
           return newAttendee;
           });
         this._attendees.next(List(attendees));
@@ -61,30 +79,47 @@ export default class AttendeeService {
   }
 
   getAttendee(id): Promise<Attendee> {
-    return this.http.get(`${ATTENDEE_URI}/${id}`)
+    return this.loadFromLocalStorage().get(`${ATTENDEE_KEY}/${id}`)
       .toPromise()
       .then(response => response.json() as Attendee);
   }
 
+  // saveAttendee(attendee:any = {}): void {
+  //   const attendees = this.loadFromLocalStorage();
+  //   attendee.id = attendee.id || UUID.UUID();
+  //   attendees.push(attendee);
+  //
+  //   this.saveToLocalStorage(attendees);
+  // }
+  //
+  // deleteAttendee(id): void {
+  //   const attendees = this.loadFromLocalStorage()
+  //     .filter(attendee => attendee.id != id);
+  //   this.saveToLocalStorage(attendees);
+  // }
+
   saveAttendee(attendee) {
-    const attendeeCopy = JSON.parse(JSON.stringify(attendee));
-    if (!attendee._id) {
+    const attendeeCopy = this.loadFromLocalStorage();
+    if (!attendee.id) {
       return this.addAttendee(attendeeCopy);
     } else {
 
-      var id = attendeeCopy._id;
-      delete attendeeCopy._id;
+      let id = attendeeCopy.id;
+      delete attendeeCopy.id;
 
       return this.updateAttendee(id, attendeeCopy);
     }
   }
 
-  private addAttendee(addedAttendee) {
-    let obs = this.http.post(ATTENDEE_URI, addedAttendee);
+  private addAttendee(attendee:any = {}): void {
+    let obs = this.loadFromLocalStorage().push(attendee);
+    attendee.id = attendee.id || UUID.UUID();
+    this.attendees.push(attendee);
+
 
     obs.subscribe(
       res => {
-        this._attendees.next(this._attendees.getValue().push(addedAttendee));
+        this.saveToLocalStorage(attendee);
       });
 
     return obs;
@@ -92,31 +127,31 @@ export default class AttendeeService {
 
   private updateAttendee(id, updatedAttendee) {
     debugger;
-    let obs = this.http.put(`${ATTENDEE_URI}/${id}`,
+    let obs = this.loadFromLocalStorage().push(
       updatedAttendee).share();
 
     obs.subscribe(
       res => {
         let attendees = this._attendees.getValue();
         let index = attendees.findIndex((attendee: Attendee) =>
-          attendee._id === updatedAttendee._id);
+          attendee.id === updatedAttendee._id);
         let attendee:Attendee = attendees.get(index);
-        var newAttendee = new Attendee(attendee.role, attendee.salary);
-        newAttendee._id = attendee._id;
+        let newAttendee = new Attendee(attendee.role, attendee.salary);
+        newAttendee.id = attendee.id;
         this._attendees.next(attendees.set(index, newAttendee));
       }
-    )
+    );
 
     return obs;
   }
 
   deleteAttendee(deleted:Attendee) {
-    let obs:Observable<any> = this.http.delete(`${ATTENDEE_URI}/${deleted._id}`).share();
+    let obs:Observable<any> = this.loadFromLocalStorage().delete(`${ATTENDEE_KEY}/${deleted.id}`).share();
 
     obs.subscribe(
       res => {
         let attendees: List<Attendee> = this._attendees.getValue();
-        let index = attendees.findIndex((attendee) => attendee._id === deleted._id);
+        let index = attendees.findIndex((attendee) => attendee.id === deleted.id);
         this._attendees.next(attendees.delete(index));
       }
     );
