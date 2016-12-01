@@ -3,8 +3,8 @@
   <li *ngFor="let attendee of this.attendees | async">
       <span (click)="onAttendeeSelected(attendee)">
         <b>{{ attendee.role }} - {{ attendee.salary|currency:'USD':true }}</b>
-        <button type="button" (click)="onAttendeeDelete(attendee)">Delete</button>
       </span>
+      <button type="button" (click)="onAttendeeDelete(attendee)">Delete</button>
   </li>
   <button type="button" (click)="onAttendeeAdd()">Add</button>
 </div>
