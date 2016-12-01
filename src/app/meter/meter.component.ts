@@ -39,4 +39,8 @@ export class MeterComponent implements OnInit {
   onStopClick() {
     clearInterval(this.intervalID);
   }
+
+  onResetClick() {
+    this.meterValue = 0;
+  }
 }
