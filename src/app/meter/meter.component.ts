@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-// import { Input, trigger, state, style, transition, animate } from '@angular/core';
-
 import Attendee from '../shared/attendee';
 import AttendeeService from '../shared/attendee.service';
 
@@ -12,22 +10,17 @@ import AttendeeService from '../shared/attendee.service';
 export class MeterComponent implements OnInit {
 
   meterValue = 0;
-  meterRate = 0;
   refreshInterval = 100;
   intervalID;
   attendees: Attendee[];
-
-
-  // TODO Add time travel
-  // meterStart = new Date();
-  // meterEnd = null;
+  // meterRate = 0;
 
   constructor(public attendeeService: AttendeeService) { }
 //TODO change the this. stuff to the mongodb
   ngOnInit() {
-    this.attendeeService.rateChanged.subscribe(() => {
-      this.meterRate = this.attendeeService.intervalRate;
-    });
+    // this.attendeeService.rateChanged.subscribe(() => {
+    //   this.meterRate = this.attendeeService.intervalRate;
+    // });
   }
 
   ngOnDestroy() {
@@ -36,14 +29,10 @@ export class MeterComponent implements OnInit {
     }
   }
 
-  meterInit() {
-    this.meterValue += this.meterRate;
-  }
-
   //TODO move calculate to attendee changed event
   onStartClick() {
     this.intervalID = setInterval(() => {
-      this.meterInit();
+      this.meterValue += this.attendeeService.intervalRate;
     }, this.refreshInterval);
   };
 
