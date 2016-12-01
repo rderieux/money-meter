@@ -11,13 +11,13 @@ import { List } from 'immutable';
 })
 export class AttendeeListComponent implements OnInit {
 
-  attendees: Observable<List<Attendee>>;
+  attendees: AttendeeService;
   selectedAttendee: Attendee;
 
   constructor(private attendeeService: AttendeeService) { }
 
   ngOnInit() {
-    this.attendees = this.attendeeService.attendees;
+   this.attendees = this.attendeeService.attendees;
   }
 
   //TODO handle a selected attendee being modified without save/close
