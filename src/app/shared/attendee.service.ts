@@ -16,8 +16,6 @@ export default class AttendeeService {
   private _attendees: BehaviorSubject<List<Attendee>>
     = new BehaviorSubject(List([]));
 
-  // rateChanged = new EventEmitter();
-
   constructor(private http: Http) {
     this.loadInitialData();
   }
@@ -48,22 +46,16 @@ export default class AttendeeService {
       }, error => console.log('Could not load attendees'));
   }
 
-  // getAttendee(id): Promise<Attendee> {
-  //   return this.http.get(`${ATTENDEE_URI}/${id}`)
-  //     .toPromise()
-  //     .then(response => response.json() as Attendee);
-  // }
-
   saveAttendee(attendee) {
     const attendeeCopy = JSON.parse(JSON.stringify(attendee));
     if (!attendee._id) {
-      return this.addAttendee(attendeeCopy);
+      this.addAttendee(attendeeCopy);
     } else {
 
       var id = attendeeCopy._id;
       delete attendeeCopy._id;
 
-      return this.updateAttendee(id, attendeeCopy);
+      this.updateAttendee(id, attendeeCopy);
     }
   }
 
@@ -74,31 +66,18 @@ export default class AttendeeService {
       res => {
         this._attendees.next(this._attendees.getValue().push(res.json()));
       });
-
-    return obs;
+    // return obs;
   }
 
   private updateAttendee(id, updatedAttendee) {
-    let obs = this.http.put(`${ATTENDEE_URI}/${id}`,
-      updatedAttendee).share();
-
-    obs.subscribe(
-      res => {
-        let attendees = this._attendees.getValue();
-        let index = attendees.findIndex((attendee: Attendee) =>
-          attendee._id === updatedAttendee._id);
-        let attendee:Attendee = attendees.get(index);
-        var newAttendee = new Attendee(attendee.role, attendee.salary);
-        newAttendee._id = attendee._id;
-        this._attendees.next(attendees.set(index, newAttendee));
-      }
-    )
-
-    return obs;
+    this.http.put(`${ATTENDEE_URI}/${id}`,
+      updatedAttendee).toPromise().then(() => {
+        this.loadInitialData();
+    });
   }
 
   deleteAttendee(deleted:Attendee) {
-    let obs:Observable<any> = this.http.delete(`${ATTENDEE_URI}/${deleted._id}`).share();
+    let obs:Observable<any> = this.http.delete(`${ATTENDEE_URI}/${deleted._id}`);
 
     obs.subscribe(
       res => {
@@ -107,8 +86,6 @@ export default class AttendeeService {
         this._attendees.next(attendees.delete(index));
       }
     );
-
-    return obs;
   }
 
 }

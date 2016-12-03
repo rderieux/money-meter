@@ -24,8 +24,8 @@ export class AttendeeDetailComponent implements OnInit {
 
   ngOnInit() {
     this.attendeeForm = this.fb.group({
-      'attendeeRole': [this.attendee.role],
-      'attendeeSalary': [this.attendee.salary]
+      'role': [this.attendee.role],
+      'salary': [this.attendee.salary]
     });
 
     this.attendeeForm.valueChanges.subscribe(
@@ -36,11 +36,17 @@ export class AttendeeDetailComponent implements OnInit {
 
   }
 
+  onCancelClick() {
+    this.attendeeChanged.emit(null);
+  }
 
-
-  // onSubmit(attendee: Attendee) {
-  //   attendee.id = this.attendee.id;
-  //   this.attendeeChanged.emit(attendee);
-  // }
-
+  onSubmit(attendee: Attendee) {
+    debugger;
+    attendee._id = this.attendee._id;
+    if(this.attendeeForm.controls["role"].dirty
+      || this.attendeeForm.controls["salary"].dirty) {
+      this.attendeeChanged.emit(attendee);
+    }
+    this.attendeeChanged.emit(null);
+  }
 }

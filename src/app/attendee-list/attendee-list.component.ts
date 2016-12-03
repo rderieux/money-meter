@@ -13,8 +13,11 @@ export class AttendeeListComponent implements OnInit {
 
   attendees: Observable<List<Attendee>>;
   selectedAttendee: Attendee;
+  changeDetected: boolean;
 
-  constructor(private attendeeService: AttendeeService) { }
+  constructor(private attendeeService: AttendeeService) {
+    this.changeDetected = false;
+  }
 
   ngOnInit() {
     this.attendees = this.attendeeService.attendees;
@@ -33,13 +36,10 @@ export class AttendeeListComponent implements OnInit {
     this.selectedAttendee = new Attendee('', 0);
   }
 
-  onSaveClicked() {
-    this.attendeeService.saveAttendee(this.selectedAttendee);
-    this.selectedAttendee = null;
-  }
-
-  //TODO handle a two way binding change without save click
-  onCloseClicked() {
+  onAttendeeChanged(attendee) {
+    if(attendee) {
+      this.attendeeService.saveAttendee(attendee);
+    }
     this.selectedAttendee = null;
   }
 }

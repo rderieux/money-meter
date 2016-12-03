@@ -13,14 +13,10 @@ export class MeterComponent implements OnInit {
   refreshInterval = 100;
   intervalID;
   attendees: Attendee[];
-  // meterRate = 0;
 
   constructor(public attendeeService: AttendeeService) { }
 //TODO change the this. stuff to the mongodb
   ngOnInit() {
-    // this.attendeeService.rateChanged.subscribe(() => {
-    //   this.meterRate = this.attendeeService.intervalRate;
-    // });
   }
 
   ngOnDestroy() {

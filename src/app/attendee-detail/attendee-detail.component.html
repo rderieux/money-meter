@@ -1,22 +1,24 @@
 <div *ngIf="attendee">
   <p>Modify Attendee:</p>
   <form [formGroup]="attendeeForm"
-        (submit)="onSubmit(attendeeForm.value)">
+        (ngSubmit)="onSubmit(attendeeForm.value)">
     <div>
       <label for="roleInput">Role</label>
       <input type="text"
              id="roleInput"
              placeholder="Role"
-             [formControl]="attendeeForm.controls['attendeeRole']"
+             [formControl]="attendeeForm.controls['role']"
              [(ngModel)]="attendee.role">
       <br>
       <label for="salaryInput">Salary</label>
       <input type="number"
              id="salaryInput"
              placeholder="Salary"
-             [formControl]="attendeeForm.controls['attendeeSalary']"
-             [(ngModel)]="attendee.salary">
+             [formControl]="attendeeForm.controls['salary']"
+             [ngModel]="attendee.salary">
       <br>
+      <button type="submit">Save</button>
+      <button type="button" (click)="onCancelClick()">Cancel</button>
     </div>
   </form>
 </div>
