@@ -27,9 +27,9 @@ export default class AttendeeService {
   }
 
   get meterRate() {
-    return this._attendees.getValue()
+    return (<any>this._attendees).getValue()
       .map(attendee => attendee.salary)
-      .reduce((previous, current) => previous + current, 0)
+      .reduce((previous, current) => parseInt(previous) + parseInt(current), 0)
   }
 
   get intervalRate() {
