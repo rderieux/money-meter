@@ -1,4 +1,4 @@
-import {Injectable, EventEmitter} from '@angular/core';
+import { Injectable } from '@angular/core';
 import Attendee from './attendee';
 import { List } from 'immutable';
 
@@ -13,20 +13,12 @@ const ATTENDEE_URI = 'http://localhost:4000/attendees';
 export default class AttendeeService {
 
   //don't expose Subject directly to store clients
-  // private _attendees: BehaviorSubject<Attendee[]>;
   private _attendees: BehaviorSubject<List<Attendee>>
     = new BehaviorSubject(List([]));
 
-  //made public to allow for unit testing
-  // public dataStore: {
-  //   attendees: Observable<Attendee[]>;
-  // };
-
-  rateChanged = new EventEmitter();
+  // rateChanged = new EventEmitter();
 
   constructor(private http: Http) {
-    // this.dataStore = { attendees: [] };
-    // this._attendees = <BehaviorSubject<Attendee[]>>new BehaviorSubject([]);
     this.loadInitialData();
   }
 
@@ -35,9 +27,9 @@ export default class AttendeeService {
   }
 
   get meterRate() {
-    return 100;
-    // return this.attendees.map(attendee => attendee.salary)
-    //   .reduce((previous, current) => previous + current, 0);
+    return this._attendees.getValue()
+      .map(attendee => attendee.salary)
+      .reduce((previous, current) => previous + current, 0)
   }
 
   get intervalRate() {
@@ -53,18 +45,14 @@ export default class AttendeeService {
           return newAttendee;
           });
         this._attendees.next(List(attendees));
-
-        // this.dataStore.attendees = data;
-        // this._attendees.next(Object.assign({}, this.dataStore).attendees);
-        // this.rateChanged.emit();
       }, error => console.log('Could not load attendees'));
   }
 
-  getAttendee(id): Promise<Attendee> {
-    return this.http.get(`${ATTENDEE_URI}/${id}`)
-      .toPromise()
-      .then(response => response.json() as Attendee);
-  }
+  // getAttendee(id): Promise<Attendee> {
+  //   return this.http.get(`${ATTENDEE_URI}/${id}`)
+  //     .toPromise()
+  //     .then(response => response.json() as Attendee);
+  // }
 
   saveAttendee(attendee) {
     const attendeeCopy = JSON.parse(JSON.stringify(attendee));
@@ -84,14 +72,13 @@ export default class AttendeeService {
 
     obs.subscribe(
       res => {
-        this._attendees.next(this._attendees.getValue().push(addedAttendee));
+        this._attendees.next(this._attendees.getValue().push(res.json()));
       });
 
     return obs;
   }
 
   private updateAttendee(id, updatedAttendee) {
-    debugger;
     let obs = this.http.put(`${ATTENDEE_URI}/${id}`,
       updatedAttendee).share();
 

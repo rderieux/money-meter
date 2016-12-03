@@ -5,6 +5,7 @@
         <b>{{ attendee.role }} - {{ attendee.salary|currency:'USD':true }}</b>
         <img src="../../assets/images/red-x.png" alt="Red X" (click)="onAttendeeDelete(attendee)" >
       </span>
+      <button type="button" (click)="onAttendeeDelete(attendee)">Delete</button>
   </li>
   <button type="button" (click)="onAttendeeAdd()">Add</button>
 </div>
