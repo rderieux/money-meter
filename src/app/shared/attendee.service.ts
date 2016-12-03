@@ -105,7 +105,7 @@ export default class AttendeeService {
         newAttendee._id = attendee._id;
         this._attendees.next(attendees.set(index, newAttendee));
       }
-    )
+    );
 
     return obs;
   }
