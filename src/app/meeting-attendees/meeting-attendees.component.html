@@ -1,19 +1,49 @@
-<form (submit)="onSaved()">
-  <div *ngIf="attendees">
-    <li *ngFor="let attendee of this.attendees | async">
-      <span (click)="onAttendeeSelected(attendee)">
-        <b>{{ attendee.role }}</b>
-      </span>
-      <img src="../../assets/images/red-x.png" alt="red-X" (click)="onAttendeeDelete(attendee)" >
-    </li>
-    <button type="button" (click)="onAttendeeAdd()">Add</button>
-  </div>
-  <div *ngIf="selectedAttendee">
-    <app-attendee-detail
-      (attendeeChanged)="onAttendeeChanged($event)"
-      [attendee]="selectedAttendee">
-    </app-attendee-detail>
-    <button (click)="onSaveClicked()">Save</button>
-    <button (click)="onCloseClicked()">Close</button>
-  </div>
-</form>
+<div *ngIf="attendees">
+  <select name="selectAttendee" [(ngModel)]="selectedMeetingAttendee" >
+    <!---->
+    <option *ngFor="let attendee of this.attendees | async"
+      [ngValue]="attendee">
+      {{ attendee.role }}
+    </option>
+  </select>
+  <img src="../../assets/images/green-plus-16.png" alt="green-plus"
+       (click)="onAttendeeAdd()" >
+  <img src="../../assets/images/blue-minus-16.png" alt="blue-minus"
+       (click)="onAttendeeSubtract()" >
+</div>
+<!--<div *ngIf="meetingAttendees">-->
+  <!--<li *ngFor="let meetingAttendee of this.meetingAttendees">-->
+    <!--<span>{{ meetingAttendee }} - </span>-->
+  <!--</li>-->
+<!--</div>-->
+<div *ngIf="testAttendees && meetingAttendees">
+  <li *ngFor="let test of testAttendees">
+    <span> {{ test["attendee"]["role"] }} - {{ test["quantity"] }} </span>
+    <img src="../../assets/images/green-plus-16.png" alt="green-plus"
+         (click)="onMeetingAttendeeAdd(test)" >
+    <img src="../../assets/images/blue-minus-16.png" alt="blue-minus"
+         (click)="onMeetingAttendeeSubtract(test)" >
+    <img src="../../assets/images/red-x.png" alt="red-x"
+         (click)="onMeetingAttendeeDelete(test)" >
+  </li>
+</div>
+
+<!--<form (submit)="onSaved()">-->
+  <!--<div *ngIf="attendees">-->
+    <!--<li *ngFor="let attendee of this.attendees | async">-->
+      <!--<span (click)="onAttendeeSelected(attendee)">-->
+        <!--<b>{{ attendee.role }}</b>-->
+      <!--</span>-->
+      <!--<img src="../../assets/images/red-x.png" alt="red-X" (click)="onAttendeeDelete(attendee)" >-->
+    <!--</li>-->
+    <!--<button type="button" (click)="onAttendeeAdd()">Add</button>-->
+  <!--</div>-->
+  <!--<div *ngIf="selectedAttendee">-->
+    <!--<app-attendee-detail-->
+      <!--(attendeeChanged)="onAttendeeChanged($event)"-->
+      <!--[attendee]="selectedAttendee">-->
+    <!--</app-attendee-detail>-->
+    <!--<button (click)="onSaveClicked()">Save</button>-->
+    <!--<button (click)="onCloseClicked()">Close</button>-->
+  <!--</div>-->
+<!--</form>-->
