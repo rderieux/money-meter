@@ -12,6 +12,7 @@ import AttendeeService from './shared/attendee.service';
 import { SettingsComponent } from './settings/settings.component';
 import { AttendeeListComponent } from './attendee-list/attendee-list.component';
 import { AttendeeDetailComponent } from './attendee-detail/attendee-detail.component';
+import { AdvertisementComponent } from './advertisement/advertisement.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { AttendeeDetailComponent } from './attendee-detail/attendee-detail.compo
     SettingsComponent,
     AttendeeListComponent,
     AttendeeDetailComponent,
+    AdvertisementComponent,
   ],
   imports: [
     BrowserModule,

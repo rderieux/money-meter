@@ -148,12 +148,12 @@ export default class AttendeeService {
   }
 //TODO figure out how to use a promise when calling the attendees array from local storage
   deleteAttendee(deleted: Attendee) {
-    this.loadFromLocalStorage()
-      .toPromise()
-      .then(attendees => {
-        const filteredAttendees = attendees.filter(a => a.id !== deleted.id);
+    this.loadFromLocalStorage();
+      // .toPromise()
+      // .then(attendees => {
+        const filteredAttendees = this.attendees.filter(a => a.id !== deleted.id);
         this.saveToLocalStorage(filteredAttendees);
-      });
+
   }
 
 }

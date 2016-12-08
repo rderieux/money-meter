@@ -31,12 +31,12 @@ export class SettingsComponent implements OnInit {
 
 
   //TODO add and remove from attendee service
-  // save(): void {
-  //   this.attendeeService.update(this.attendees)
-  //     .then(() => goBack());
-  // }
-  //
-  // goBack(): void {
-  //   this.location.back();
-  // }
+// save(): void {
+//   this.attendeeService.update(this.attendees)
+//     .then(() => goBack());
+// }
+//
+// goBack(): void {
+//   this.location.back();
+// }
 }
