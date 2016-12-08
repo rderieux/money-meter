@@ -3,6 +3,7 @@
   <button (click)="onStartClick()">Start</button>
   <button (click)="onStopClick()">Stop</button>
   <button (click)="onResetClick()">Reset</button>
+  <br><label> {{ timeKeeper | number : '1.0-0'}} seconds</label>
 </div>
-<app-meeting-attendees></app-meeting-attendees>
-<app-attendee-list></app-attendee-list>
+<app-meeting-attendees (meetingAttendeesChanged)="onRateChanged($event)">
+</app-meeting-attendees>

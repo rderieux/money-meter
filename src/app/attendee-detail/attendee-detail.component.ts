@@ -41,7 +41,6 @@ export class AttendeeDetailComponent implements OnInit {
   }
 
   onSubmit(attendee: Attendee) {
-    debugger;
     attendee._id = this.attendee._id;
     if(this.attendeeForm.controls["role"].dirty
       || this.attendeeForm.controls["salary"].dirty) {

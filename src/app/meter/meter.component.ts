@@ -10,9 +10,12 @@ import AttendeeService from '../shared/attendee.service';
 export class MeterComponent implements OnInit {
 
   meterValue = 0;
+  meterRate = 0;
   refreshInterval = 100;
   intervalID;
   attendees: Attendee[];
+  timeKeeper = 0;
+  //TODO add a timer next to the meter
 
   constructor(public attendeeService: AttendeeService) { }
 //TODO change the this. stuff to the mongodb
@@ -28,7 +31,8 @@ export class MeterComponent implements OnInit {
   //TODO move calculate to attendee changed event
   onStartClick() {
     this.intervalID = setInterval(() => {
-      this.meterValue += this.attendeeService.intervalRate;
+      this.meterValue += this.meterRate;
+      this.timeKeeper += .1;
     }, this.refreshInterval);
   };
 
@@ -38,5 +42,10 @@ export class MeterComponent implements OnInit {
 
   onResetClick() {
     this.meterValue = 0;
+    this.timeKeeper = 0;
+  }
+
+  onRateChanged(event) {
+    this.meterRate = event;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import Attendee from '../shared/attendee';
 import AttendeeService from '../shared/attendee.service';
 import {Observable} from "rxjs";
@@ -17,6 +17,8 @@ export class MeetingAttendeesComponent implements OnInit {
   meetingAttendees: any;
   testAttendees: Array<any>;
 
+  @Output() meetingAttendeesChanged = new EventEmitter<number>();
+
   constructor(private attendeeService: AttendeeService) { }
 
   ngOnInit() {
@@ -32,13 +34,10 @@ export class MeetingAttendeesComponent implements OnInit {
   // TODO refactor DRY with attendeeAdd
   onMeetingAttendeeAdd(value) {
     this.meetingAttendees[value.attendee._id].quantity += 1;
-    var temp = this.meetingAttendees;
-    this.testAttendees = Object.keys(temp)
-      .map(function(k) { return temp[k] });
+    this.redraw();
   }
 
     onAttendeeAdd() {
-    debugger;
     var value = this.meetingAttendees[this.selectedMeetingAttendee._id];
     if(value) {
       value.quantity += 1;
@@ -46,9 +45,7 @@ export class MeetingAttendeesComponent implements OnInit {
       this.meetingAttendees[this.selectedMeetingAttendee._id] = {
         attendee: this.selectedMeetingAttendee, quantity: 1}
     }
-    var temp = this.meetingAttendees;
-    this.testAttendees = Object.keys(temp)
-      .map(function(k) { return temp[k] });
+    this.redraw();
   }
 
   //TODO refactor dry with attendee subtract
@@ -58,16 +55,12 @@ export class MeetingAttendeesComponent implements OnInit {
     } else if (value || value.quantity === 1) {
       delete this.meetingAttendees[value.attendee._id];
     }
-    var temp = this.meetingAttendees;
-    this.testAttendees = Object.keys(temp)
-      .map(function(k) { return temp[k] });
+    this.redraw();
   }
 
   onMeetingAttendeeDelete(value) {
     delete this.meetingAttendees[value.attendee._id];
-    var temp = this.meetingAttendees;
-    this.testAttendees = Object.keys(temp)
-      .map(function(k) { return temp[k] });
+    this.redraw();
   }
 
   onAttendeeSubtract() {
@@ -79,11 +72,20 @@ export class MeetingAttendeesComponent implements OnInit {
     } else {
       return;
     }
-    var temp = this.meetingAttendees;
-    this.testAttendees = Object.keys(temp)
-      .map(function(k) { return temp[k] });
+    this.redraw();
   }
 
+  redraw() {
+    var temp = this.meetingAttendees;
 
+    this.testAttendees = Object.keys(temp)
+      .map(function(k) { return temp[k] });
+
+    var rate = this.testAttendees
+      .map(index => index.attendee.salary * index.quantity)
+      .reduce((previous, current) => previous + current, 0)
+
+    this.meetingAttendeesChanged.emit(rate / 2080 / 60 / 60 / 10);
+  }
 
 }

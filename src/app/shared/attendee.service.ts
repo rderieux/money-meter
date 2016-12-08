@@ -24,16 +24,6 @@ export default class AttendeeService {
     return this._attendees.asObservable();
   }
 
-  get meterRate() {
-    return (<any>this._attendees).getValue()
-      .map(attendee => attendee.salary)
-      .reduce((previous, current) => parseInt(previous) + parseInt(current), 0)
-  }
-
-  get intervalRate() {
-    return this.meterRate / 2080 / 60 / 60 / 10;
-  }
-
   loadInitialData() {
     this.http.get(ATTENDEE_URI)
       .subscribe(res => {
@@ -66,7 +56,6 @@ export default class AttendeeService {
       res => {
         this._attendees.next(this._attendees.getValue().push(res.json()));
       });
-    // return obs;
   }
 
   private updateAttendee(id, updatedAttendee) {

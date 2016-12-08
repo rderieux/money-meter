@@ -13,10 +13,8 @@ export class AttendeeListComponent implements OnInit {
 
   attendees: Observable<List<Attendee>>;
   selectedAttendee: Attendee;
-  changeDetected: boolean;
 
   constructor(private attendeeService: AttendeeService) {
-    this.changeDetected = false;
   }
 
   ngOnInit() {
