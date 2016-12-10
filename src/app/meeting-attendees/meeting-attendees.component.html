@@ -1,7 +1,8 @@
 <div *ngIf="attendees">
-  <select name="selectAttendee" [(ngModel)]="selectedMeetingAttendee" >
+  <label>Attendee Types:</label>
+  <select name="selectAttendee" [(ngModel)]="selectedMeetingAttendee">
     <option *ngFor="let attendee of this.attendees | async"
-      [ngValue]="attendee">
+      [ngValue]="attendee" >
       {{ attendee.role }}
     </option>
   </select>
@@ -11,6 +12,7 @@
        (click)="onAttendeeSubtract()" >
 </div>
 <div *ngIf="testAttendees && meetingAttendees">
+  <label>Meeting Attendees:</label>
   <li *ngFor="let test of testAttendees">
     <span> {{ test["attendee"]["role"] }} - {{ test["quantity"] }} </span>
     <img src="../../assets/images/green-plus-24.png" alt="green-plus"

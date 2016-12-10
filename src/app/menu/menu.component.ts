@@ -22,9 +22,4 @@ export class MenuComponent implements OnInit {
   onMenuSelected(menu: Menu) {
     this.selectedMenu = menu;
   }
-
-
-
-
-
 }

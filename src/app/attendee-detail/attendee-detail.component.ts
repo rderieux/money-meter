@@ -33,7 +33,6 @@ export class AttendeeDetailComponent implements OnInit {
         console.log('form changed to', form);
       }
     );
-
   }
 
   onCancelClick() {

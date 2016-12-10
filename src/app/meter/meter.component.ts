@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import Attendee from '../shared/attendee';
-import AttendeeService from '../shared/attendee.service';
 
 @Component({
   selector: 'app-meter',
@@ -11,16 +9,14 @@ export class MeterComponent implements OnInit {
 
   meterValue = 0;
   meterRate = 0;
-  refreshInterval = 100;
   intervalID;
-  attendees: Attendee[];
-  timeKeeper = 0;
-  //TODO add a timer next to the meter
+  started = false;
 
-  constructor(public attendeeService: AttendeeService) { }
-//TODO change the this. stuff to the mongodb
-  ngOnInit() {
-  }
+  refreshInterval = 100;
+  timer = 0 //TODO turn timer into a DDL to choose interval
+
+  constructor() { }
+  ngOnInit() { }
 
   ngOnDestroy() {
     if (this.intervalID) {
@@ -28,21 +24,26 @@ export class MeterComponent implements OnInit {
     }
   }
 
-  //TODO move calculate to attendee changed event
   onStartClick() {
+    if(this.intervalID && this.started)
+      return;
+
     this.intervalID = setInterval(() => {
+      this.started = true;
       this.meterValue += this.meterRate;
-      this.timeKeeper += .1;
+      this.timer += .1;
     }, this.refreshInterval);
   };
 
   onStopClick() {
     clearInterval(this.intervalID);
+    this.started = false;
   }
 
   onResetClick() {
+    this.onStopClick();
     this.meterValue = 0;
-    this.timeKeeper = 0;
+    this.timer = 0;
   }
 
   onRateChanged(event) {
