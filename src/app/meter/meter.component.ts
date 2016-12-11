@@ -30,6 +30,9 @@ export class MeterComponent implements OnInit {
 
   //TODO move calculate to attendee changed event
   onStartClick() {
+    if(this.intervalID) {
+      clearInterval(this.intervalID)
+    }
     this.intervalID = setInterval(() => {
       this.meterValue += this.meterRate;
       this.timeKeeper += .1;
