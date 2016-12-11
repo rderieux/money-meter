@@ -1,9 +1,9 @@
 <div>
   <label>{{ meterValue | currency : 'USD':true:'1.4-4' }}</label>
-  <button (click)="onStartClick()">Start</button>
-  <button (click)="onStopClick()">Stop</button>
-  <button (click)="onResetClick()">Reset</button>
-  <br><label> {{ timer | number : '1.0-0'}} seconds</label>
+  <button type="button" class="btn btn-start" (click)="onStartClick()">Start</button>
+  <button type="button" class="btn btn-stop" (click)="onStopClick()">Stop</button>
+  <button type="button" class="btn btn-reset" (click)="onResetClick()">Reset</button>
+  <br><label> {{ timeKeeper | number : '1.0-0'}} seconds</label>
 </div>
 <app-meeting-attendees (meetingAttendeesChanged)="onRateChanged($event)">
 </app-meeting-attendees>

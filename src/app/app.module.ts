@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router'
 import { AppComponent } from './app.component';
 import { MeterComponent } from './meter/meter.component';
 import { MenuComponent } from './menu/menu.component';
-import MenuService from './shared/menu.service';
+// import MenuService from './shared/menu.service';
 import AttendeeService from './shared/attendee.service';
 import { SettingsComponent } from './settings/settings.component';
 import { AttendeeListComponent } from './attendee-list/attendee-list.component';
@@ -50,7 +50,7 @@ import { MeetingAttendeesComponent } from './meeting-attendees/meeting-attendees
     ])
   ],
   providers: [
-    MenuService,
+    // MenuService,
     AttendeeService
   ],
   bootstrap: [AppComponent]

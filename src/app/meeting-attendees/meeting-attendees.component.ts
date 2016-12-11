@@ -34,7 +34,7 @@ export class MeetingAttendeesComponent implements OnInit {
   }
 
     onAttendeeAdd() {
-    var value = this.meetingAttendees[this.selectedMeetingAttendee._id];
+    let value = this.meetingAttendees[this.selectedMeetingAttendee._id];
     if(value) {
       value.quantity += 1;
     } else {
@@ -60,7 +60,7 @@ export class MeetingAttendeesComponent implements OnInit {
   }
 
   onAttendeeSubtract() {
-    var value = this.meetingAttendees[this.selectedMeetingAttendee._id];
+    let value = this.meetingAttendees[this.selectedMeetingAttendee._id];
     if(value && value.quantity > 1) {
       value.quantity -= 1;
     } else if (value || value.quantity === 1) {
@@ -72,12 +72,12 @@ export class MeetingAttendeesComponent implements OnInit {
   }
 
   redraw() {
-    var temp = this.meetingAttendees;
+    let temp = this.meetingAttendees;
 
     this.testAttendees = Object.keys(temp)
-      .map(function(k) { return temp[k] });
+      .map((k) => { return temp[k] });
 
-    var rate = this.testAttendees
+    let rate = this.testAttendees
       .map(index => index.attendee.salary * index.quantity)
       .reduce((previous, current) => previous + current, 0)
 

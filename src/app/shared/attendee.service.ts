@@ -28,7 +28,7 @@ export default class AttendeeService {
     this.http.get(ATTENDEE_URI)
       .subscribe(res => {
         let attendees = (<Object[]>res.json()).map((attendee: any) => {
-          var newAttendee = new Attendee(attendee.role, attendee.salary);
+          let newAttendee = new Attendee(attendee.role, attendee.salary);
           newAttendee._id = attendee._id;
           return newAttendee;
           });
@@ -42,7 +42,7 @@ export default class AttendeeService {
       this.addAttendee(attendeeCopy);
     } else {
 
-      var id = attendeeCopy._id;
+      let id = attendeeCopy._id;
       delete attendeeCopy._id;
 
       this.updateAttendee(id, attendeeCopy);
