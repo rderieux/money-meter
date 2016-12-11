@@ -8,4 +8,8 @@ describe('Component: Meter', () => {
     let component = new MeterComponent();
     expect(component).toBeTruthy();
   });
+  it('should increment the meter', () => {
+    let component = new MeterComponent();
+    
+  })
 });
