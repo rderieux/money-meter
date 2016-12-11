@@ -1,7 +1,8 @@
 <div *ngIf="attendees">
-  <select name="selectAttendee" id="metricsType" required [(ngModel)]="selectedMeetingAttendee" >
+  <label>Attendee Types:</label>
+  <select name="selectAttendee" [(ngModel)]="selectedMeetingAttendee">
     <option *ngFor="let attendee of this.attendees | async"
-      [ngValue]="attendee">
+      [ngValue]="attendee" >
       {{ attendee.role }}
     </option>
   </select>
@@ -11,21 +12,22 @@
        (click)="onAttendeeSubtract()" >
 </div>
 <div *ngIf="testAttendees && meetingAttendees">
-  <table class="table">
     <thead>
     <tr>
+  <table class="table">
       <!--<th>Role</th>-->
       <!--<th>#</th>-->
     </tr>
-      <li *ngFor="let test of testAttendees">
-        <span> {{ test["attendee"]["role"] }} - {{ test["quantity"] }} </span>
-        <img src="../../assets/images/green-plus-24.png" alt="green-plus"
-             (click)="onMeetingAttendeeAdd(test)" >
-        <img src="../../assets/images/blue-minus-24.png" alt="blue-minus"
-             (click)="onMeetingAttendeeSubtract(test)" >
-        <img src="../../assets/images/red-x.png" alt="red-x"
-             (click)="onMeetingAttendeeDelete(test)" >
-      </li>
+  <label>Meeting Attendees:</label>
+  <li *ngFor="let test of testAttendees">
+    <span> {{ test["attendee"]["role"] }} - {{ test["quantity"] }} </span>
+    <img src="../../assets/images/green-plus-24.png" alt="green-plus"
+         (click)="onMeetingAttendeeAdd(test)" >
+    <img src="../../assets/images/blue-minus-24.png" alt="blue-minus"
+         (click)="onMeetingAttendeeSubtract(test)" >
+    <img src="../../assets/images/red-x.png" alt="red-x"
+         (click)="onMeetingAttendeeDelete(test)" >
+  </li>
     </thead>
   </table>
 </div>
