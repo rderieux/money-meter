@@ -27,6 +27,7 @@ export default class AttendeeService {
   loadInitialData() {
     this.http.get(ATTENDEE_URI)
       .subscribe(res => {
+        debugger;
         let attendees = (<Object[]>res.json()).map((attendee: any) => {
           let newAttendee = new Attendee(attendee.role, attendee.salary);
           newAttendee._id = attendee._id;
