@@ -12,12 +12,12 @@
        (click)="onAttendeeSubtract()" >
 </div>
 <div *ngIf="testAttendees && meetingAttendees">
-    <thead>
-    <tr>
-  <table class="table">
-      <!--<th>Role</th>-->
-      <!--<th>#</th>-->
-    </tr>
+    <!--<thead>-->
+    <!--<tr>-->
+  <!--<table class="table">-->
+      <!--&lt;!&ndash;<th>Role</th>&ndash;&gt;-->
+      <!--&lt;!&ndash;<th>#</th>&ndash;&gt;-->
+    <!--</tr>-->
   <label>Meeting Attendees:</label>
   <li *ngFor="let test of testAttendees">
     <span> {{ test["attendee"]["role"] }} - {{ test["quantity"] }} </span>
@@ -28,6 +28,6 @@
     <img src="../../assets/images/red-x.png" alt="red-x"
          (click)="onMeetingAttendeeDelete(test)" >
   </li>
-    </thead>
-  </table>
+    <!--</thead>-->
+  <!--</table>-->
 </div>
