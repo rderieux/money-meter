@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import Attendee from '../shared/attendee';
 import AttendeeService from '../shared/attendee.service';
 import {Observable} from "rxjs";
-import { List, Map } from 'immutable';
+import { List } from 'immutable';
 
 @Component({
   selector: 'app-meeting-attendees',
@@ -25,10 +25,6 @@ export class MeetingAttendeesComponent implements OnInit {
     this.attendees = this.attendeeService.attendees;
     this.meetingAttendees = {};
     this.testAttendees = new Array();
-  };
-
-  onAttendeeSelected(attendee:Attendee) {
-    this.selectedAttendee = attendee;
   };
 
   // TODO refactor DRY with attendeeAdd
@@ -87,5 +83,4 @@ export class MeetingAttendeesComponent implements OnInit {
 
     this.meetingAttendeesChanged.emit(rate / 2080 / 60 / 60 / 10);
   }
-
 }
